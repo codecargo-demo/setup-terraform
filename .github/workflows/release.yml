@@ -127,6 +127,10 @@ jobs:
           cd .changes
           sed -e "1{/# /d;}" -e "2{/^$/d;}" ${{ needs.changelog-version.outputs.version }}.md > /tmp/release-notes.txt
 
+      - name: Log Deployment
+        run: |
+          echo "::notice title=Deployment Logged::Version: ${{ inputs.versionNumber }}, Environment: production, Status: in-progress"
+
       - name: GH Release
         run: |
           gh release create "${{ inputs.versionNumber }}" --notes-file /tmp/release-notes.txt --title "${{ inputs.versionNumber }}"
